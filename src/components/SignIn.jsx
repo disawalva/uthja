@@ -18,7 +18,7 @@ export default class SignIn extends React.Component{
     this.setState({isSigningIn: true}, (async () => {
       let result = await this.props.authHelper.signIn();
       if(result.user){
-        alert(JSON.stringify(result.user));
+        // alert(JSON.stringify(result.user));
       }
       else{
         alert(JSON.stringify(result.error));
