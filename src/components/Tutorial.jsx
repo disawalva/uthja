@@ -38,6 +38,7 @@ export default class Tutorial extends React.Component{
   }
 
   render(){
+    let isOpen = true;
     if(this.state.pointer >= this.state.tutorials.length){
       if(this.props.redirectTo){
         window.location.href = this.props.redirectTo;
@@ -46,12 +47,12 @@ export default class Tutorial extends React.Component{
         </Dimmer>;
       }
         
-      return ;
+      isOpen = false;
     }
     return (
       <Modal
         basic
-        open={true}
+        open={isOpen}
         size='large'
         closeIcon={false}
         closeOnDimmerClick={true}
