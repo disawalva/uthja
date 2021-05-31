@@ -5,6 +5,8 @@ import Home from './components/Home';
 import Settings from './components/Settings';
 import Tutorial from './components/Tutorial';
 import Profile from './components/Profile';
+import Header from './components/Header'
+
 import 'semantic-ui-css/semantic.min.css'
 
 import firebase from "firebase/app";
@@ -31,30 +33,33 @@ firebase.initializeApp(firebaseConfig);
 
 function App() {
   return (
-    <div style={{height: "96vh", 
-                 width: "96vw",
-                 padding: "2vh 2vw 2vh 2vw"}}>
-      <Auth authHelper={new SignInHelper(firebase)}>         
-        <Router>
-          <Switch>
-            <Route path = "/home">
-              <Home />
-            </Route>
-            <Route path = "/tutorial">
-              <Tutorial />
-            </Route>
-            <Route path = "/profile">
-              <Profile />
-            </Route>
-            <Route path = "/settings">
-              <Settings />
-            </Route>
-            <Route path = "/">
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
-      </Auth>
+    <div style={{height: "100vh", 
+                 width: "100vw"}}>
+      <Header>
+        <div style={{padding: "2vh 2vw 2vh 2vw"}}>
+          <Auth authHelper={new SignInHelper(firebase)}>         
+            <Router>
+              <Switch>
+                <Route path = "/home">
+                  <Home />
+                </Route>
+                <Route path = "/tutorial">
+                  <Tutorial />
+                </Route>
+                <Route path = "/profile">
+                  <Profile />
+                </Route>
+                <Route path = "/settings">
+                  <Settings />
+                </Route>
+                <Route path = "/">
+                  <Home />
+                </Route>
+              </Switch>
+            </Router>
+          </Auth>
+        </div>        
+      </Header>
     </div>
   );
 }
