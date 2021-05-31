@@ -35,9 +35,9 @@ function App() {
   return (
     <div style={{height: "100vh", 
                  width: "100vw"}}>
-      <Header>
-        <div style={{padding: "2vh 2vw 2vh 2vw"}}>
-          <Auth authHelper={new SignInHelper(firebase)}>         
+      <Auth authHelper={new SignInHelper(firebase)}>         
+        <Header>
+          <div style={{padding: "2vh 2vw 2vh 2vw"}}>
             <Router>
               <Switch>
                 <Route path = "/home">
@@ -57,9 +57,9 @@ function App() {
                 </Route>
               </Switch>
             </Router>
-          </Auth>
-        </div>        
-      </Header>
+          </div>        
+        </Header>
+      </Auth>
     </div>
   );
 }
