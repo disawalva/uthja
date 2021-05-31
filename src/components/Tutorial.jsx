@@ -38,7 +38,7 @@ export default class Tutorial extends React.Component{
   }
 
   render(){
-    let isOpen = true;
+    let isOpen = false;
     if(this.state.pointer >= this.state.tutorials.length){
       if(this.props.redirectTo){
         window.location.href = this.props.redirectTo;

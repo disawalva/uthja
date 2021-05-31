@@ -6,7 +6,6 @@ export default class Header extends React.Component{
     return [
       this.header(),
       this.props.children,
-      this.footer()
     ];
   }
 
@@ -19,7 +18,9 @@ export default class Header extends React.Component{
       background: "#333333",
       textAlign: "center",
       alignItems: "center",
-      justifyContent: "left"
+      justifyContent: "left",
+      position: "sticky",
+      top: "0"
     }}>
       <div style={{
         width : "40%",
@@ -27,24 +28,20 @@ export default class Header extends React.Component{
       }}>
         Uthja
       </div>
-    </div>;
-  }
-
-  footer(){
-    return <div style={{
-      position: "sticky",
-      bottom: "0",
-      width: "100vw",
-      height: "50px",
-      display: "flex",
-      background: "#333333",
-      justifyContent:"space-evenly",
-      flexDirection: "row",
-      alignItems: "center"
-    }}>
-        <Icon name="user" size="big"/>
-        <Icon name="help" size="big"/>
-        <Icon name="setting" size="big"/>
+      <div style={{
+        width : "40%",
+      }}>
+      </div>
+      <div style={{
+        width : "40%",
+        display: "flex",
+        justifyContent: "space-around",
+        paddingRight: "4%",
+        paddingTop: "2%"
+      }}>
+        <Icon name="setting" />
+        <Icon name="user" />
+      </div>
     </div>;
   }
 }
