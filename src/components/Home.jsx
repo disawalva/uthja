@@ -1,7 +1,7 @@
 import React from "react";
 import Tutorial from "./Tutorial";
 import Calendar from "./Calendar";
-import {Segment} from "semantic-ui-react";
+import Header from "./Header";
 
 export default class Home extends React.Component{
   render(){
@@ -52,7 +52,8 @@ export default class Home extends React.Component{
       );
     });
     return <React.Fragment>
-        <Tutorial />
+      <Header isHome={true} />
+        <Tutorial redirectTo="/settings"/>
         <div style={{
           display : "flex",
           flexDirection : "column",
@@ -67,6 +68,6 @@ export default class Home extends React.Component{
           </div>
         </div>
         <Calendar></Calendar>
-      </React.Fragment>
+    </React.Fragment>
   }
 }

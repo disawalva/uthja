@@ -36,9 +36,8 @@ function App() {
     <div style={{height: "100vh", 
                  width: "100vw"}}>
       <Auth authHelper={new SignInHelper(firebase)}>         
-        <Header>
-          <div style={{padding: "2vh 2vw 2vh 2vw"}}>
-            <Router>
+        <Router>
+          <div style={{padding: "0vh 2vw 2vh 2vw"}}>
               <Switch>
                 <Route path = "/home">
                   <Home />
@@ -56,9 +55,8 @@ function App() {
                   <Home />
                 </Route>
               </Switch>
-            </Router>
           </div>        
-        </Header>
+        </Router>
       </Auth>
     </div>
   );

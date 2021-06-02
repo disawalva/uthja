@@ -4,17 +4,17 @@ import { Loader, Header, Icon, Modal, Dimmer } from 'semantic-ui-react'
 export default class Tutorial extends React.Component{
   constructor(props){
     super(props);
-    let tutorials = [{
+    let tutorials = this.props.tutorials || [{
       header : "Waazup!",
       message : "Let's get started!",
     },{
       header : "This is how it works!",
       message : "You start by setting up your account, paying some money and configuring how much money should be deducted per day",
     },{
-      header : "This is how it works", 
-      message : "Each morning you either perform some tasks or some money will get dedcuted temporarily",
+      header : "And then...", 
+      message : "Each morning you either perform some tasks or temporarily loose some money",
     },{
-      header : "This is how it works",
+      header : "But yeah!",
       message : "There's never a permanent loss of money. You always have a chance of winning it back somehow",
     },{
       header : "Easy Peasy?",
@@ -33,12 +33,13 @@ export default class Tutorial extends React.Component{
     this.state = {
       tutorials,
       pointer : this.props.pointer || 0,
+      showNext: true,
+      isOpen : true,
     }
 
   }
 
   render(){
-    let isOpen = false;
     if(this.state.pointer >= this.state.tutorials.length){
       if(this.props.redirectTo){
         window.location.href = this.props.redirectTo;
@@ -46,13 +47,20 @@ export default class Tutorial extends React.Component{
           <Loader />
         </Dimmer>;
       }
-        
-      isOpen = false;
+      
+      return;
+    }
+
+    let {tutorials, pointer} = this.state;
+    let modalObj = tutorials[pointer];
+    let additionalChildren = modalObj.additionalChildren || "";
+    if(typeof additionalChildren === "function"){
+      additionalChildren = additionalChildren();
     }
     return (
       <Modal
         basic
-        open={isOpen}
+        open={this.state.isOpen}
         size='large'
         closeIcon={false}
         closeOnDimmerClick={true}
@@ -61,21 +69,51 @@ export default class Tutorial extends React.Component{
         dimmer="blurring"
       >
         <Header icon style={{fontSize: "3em"}}>
-          {(this.state.tutorials[this.state.pointer] || {header : ""}).header}
+          {(modalObj || {header : ""}).header}
         </Header>
         <Modal.Content style={{fontSize: "2em"}}>
           <p style={{textAlign: "center"}}>
-          {(this.state.tutorials[this.state.pointer] || {message : ""}).message}
+          {(modalObj || {message : ""}).message}
           </p>
+          {additionalChildren}
           <p style={{textAlign: "center"}}>
-            {/* <Button icon > */}
-              <Icon name="arrow alternate circle right" size="big" onClick={() => {
-              this.setState({pointer : this.state.pointer + 1})
-              }}/>
-            {/* </Button> */}
+              {this.state.showNext ? <Icon name="arrow alternate circle right" size="big" onClick={() => {
+                if(modalObj.confirmHandler){
+                  this.showNextLoader();
+                  modalObj.confirmHandler()
+                  .then(() => {
+                    this.showNextLoader(false, () => {
+                      this.incrementPointer();
+                    })
+                  })
+                }
+                else{
+                  this.incrementPointer();
+                }
+              }}/> : <Loader active inline='centered'/>}
           </p>
+          <div style={{fontSize:"small", textAlign: "center", textDecoration: "underline"}} onClick={() => {
+            if(this.props.onClose){
+              this.props.onClose()
+            }
+            else{
+              this.setState({isOpen : false})
+            }
+          }}>Close</div>
         </Modal.Content>
       </Modal>
     )
+  }
+
+  incrementPointer(){
+    this.setState({pointer : this.state.pointer + 1});
+  }
+  
+  showNextLoader(val = true, callback){
+    this.setState({showNext : !val}, () => {
+      if(typeof callback === 'function'){
+        callback();
+      }
+    });
   }
 }
